@@ -3,14 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WaveSoluciones Bluetooth PWA</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>WAVE Soluciones</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 2em; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 2em; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2 { color: #0056b3; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.3s; }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
+        #dataDisplay p { background: #e9ecef; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; }
+        #dataDisplay p strong { color: #495057; }
+        fieldset { border: 1px solid #ddd; border-radius: 5px; margin-top: 2em; padding: 1.5em; }
+        legend { font-weight: bold; color: #0056b3; }
+        .form-group { margin-bottom: 1em; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: calc(100% - 20px); padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .status-message { margin-top: 1em; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
+        .status-success { background-color: #d4edda; color: #155724; }
+        .status-error { background-color: #f8d7da; color: #721c24; }
+    </style>
 </head>
 <body>
-    <h1>Datos del Sensor</h1>
-    <button id="connectButton">Conectar!</button>
-    <div id="dataDisplay">
-        <!-- Los elementos se generarán aquí dinámicamente -->
+    <div class="container">
+        <h1>Wave Soluciones</h1>
+        <button id="connectButton">Conectar a Dispositivo BLE</button>
+        
+        <h2>Datos en Tiempo Real</h2>
+        <div id="dataDisplay"><p>Esperando conexión...</p></div>
+
+        <fieldset id="configForm" disabled>
+            <legend>Configuración Remota</legend>
+            <div class="form-group">
+                <label for="ssid_primary">SSID Primario</label>
+                <input type="text" id="ssid_primary" placeholder="Nombre de la red principal">
+            </div>
+            <div class="form-group">
+                <label for="pass_primary">Contraseña Primaria</label>
+                <input type="password" id="pass_primary" placeholder="Dejar en blanco para no cambiar">
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="ssid_secondary">SSID Secundario</label>
+                <input type="text" id="ssid_secondary" placeholder="Nombre de la red secundaria">
+            </div>
+            <div class="form-group">
+                <label for="pass_secondary">Contraseña Secundaria</label>
+                <input type="password" id="pass_secondary" placeholder="Dejar en blanco para no cambiar">
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="device_tag_value">Nombre del Dispositivo (InfluxDB)</label>
+                <input type="text" id="device_tag_value" placeholder="Ej: Test_Sensor_1">
+            </div>
+            <button id="saveButton">Guardar Configuración</button>
+            <div id="statusMessage" class="status-message" style="display: none;"></div>
+        </fieldset>
     </div>
 
     <script src="app.js"></script>
